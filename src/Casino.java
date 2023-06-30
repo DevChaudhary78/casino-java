@@ -4,6 +4,7 @@ public class Casino {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         BlackJack blackJack = new BlackJack();
+        System.out.println("Welcome to Casino \uD83C\uDFB0: you're playing BlackJack! \uD83C\uDCCF");
 
         boolean exit = false;
         while (!exit) {
@@ -27,11 +28,16 @@ public class Casino {
                     System.out.println("Dealer score: " + blackJack.getDealerScore());
                     String winResult = blackJack.winCheck();
                     if (!winResult.equals("notDone")) {
-                        System.out.println("Game over. " + winResult + " wins!");
+                        if(winResult.equalsIgnoreCase("player")) {
+                            System.out.println("\n" + ConsoleColors.GREEN + "Game over. " + winResult + " wins! \uD83D\uDE80" + ConsoleColors.RESET);
+                        } else {
+                            System.out.println("\n" + ConsoleColors.RED + "Game over. " + winResult + " wins! \uD83E\uDDBE" + ConsoleColors.RESET);
+                        }
                         blackJack.reset();
                     }
                 }
                 case 2 -> {
+                    System.out.println(ConsoleColors.YELLOW + "\nRunning Monte Carlo...\uD83C\uDFC3\u200D\n" + ConsoleColors.RESET);
                     System.out.print("Enter the number of simulations to run: ");
                     int numSimulations = scanner.nextInt();
                     System.out.print("Enter the number of draws per simulation: ");
@@ -43,20 +49,25 @@ public class Casino {
                     double winPercentage = (double) simMyWins / numSimulations * 100;
                     double losePercentage = (double) simDealerWins / numSimulations * 100;
                     double notDonePercentage = (double) simNotDone / numSimulations * 100;
+
                     System.out.println("Simulation Results:");
-                    System.out.print("\nPlayer wins: " + simMyWins + " (" + Math.round(winPercentage) + "%): ");
+                    System.out.print(ConsoleColors.GREEN + "\nPlayer wins: " + simMyWins + " (" + Math.round(winPercentage) + "%): ");
                     for(int i = 0; i < Math.round(winPercentage); i++) {
                         System.out.print("*");
                     }
-                    System.out.print("\nDealer wins: " + simDealerWins + " (" + Math.round(losePercentage) + "%): ");
+                    System.out.println(ConsoleColors.RESET);
+
+                    System.out.print(ConsoleColors.RED + "\nDealer wins: " + simDealerWins + " (" + Math.round(losePercentage) + "%): ");
                     for(int i = 0; i < Math.round(losePercentage); i++) {
                         System.out.print("*");
                     }
-                    System.out.print("\nNot finished: " + simNotDone + " (" + Math.round(notDonePercentage) + "%): ");
+                    System.out.println(ConsoleColors.RESET);
+
+                    System.out.print(ConsoleColors.YELLOW + "\nNot finished: " + simNotDone + " (" + Math.round(notDonePercentage) + "%): ");
                     for(int i = 0; i < Math.round(notDonePercentage); i++) {
                         System.out.print("*");
                     }
-                    System.out.println("\n");
+                    System.out.println(ConsoleColors.RESET + "\n");
                 }
                 case 3 -> {
                     blackJack.reset();

@@ -5,7 +5,6 @@ public class BlackJack {
     private int sim_myWins;
     private int sim_dealerWins;
     private int sim_notDone;
-    private final int winPoints = 21;
 
     private final Deck deck;
 
@@ -53,7 +52,7 @@ public class BlackJack {
         Card card = deck.draw(isSimulated);
         if(card != null) {
             int value = card.getValue();
-            if(myTurn) {
+            if(this.isMyTurn()) {
                 myScore += value;
             } else {
                 dealerScore += value;
@@ -65,20 +64,25 @@ public class BlackJack {
     }
 
     public String winCheck() {
-        if(myScore > winPoints && dealerScore > winPoints) return "Dealer";
-        else if(myScore <= winPoints && dealerScore > winPoints) return "Player";
+        int winPoints = 21;
+        if(myScore == winPoints && dealerScore == winPoints) return "Dealer";
         else if(myScore > winPoints) return "Dealer";
-        else {
-            return "notDone";
-        }
+        else if(myScore == winPoints) return "Player";
+        else if(dealerScore == winPoints) return "Dealer";
+        else if(dealerScore > winPoints) return "Player";
+        else return "notDone";
     }
 
     /**
-     *
+     * Monte Carlo is basically a brute force method to find the probability of winning a particular game.
+     * In this scenario,
+     * We are finding the probability
+     * to win a game by providing number of games to play and number of draws per play
      * @param n the number of games to run
      * @param draws the number of draws to simulate
+     * This method won't return the winning probability,
+     *              but will modify variables, which will be used by View class i.e., Casino
      */
-
     public void runMonteCarlo(int n, int draws) {
         this.clearSimulation();
 
@@ -147,9 +151,5 @@ public class BlackJack {
 
     public int getSim_notDone() {
         return this.sim_notDone;
-    }
-
-    public int getWinPoints() {
-        return this.winPoints;
     }
 }
