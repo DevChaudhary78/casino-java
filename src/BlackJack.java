@@ -92,9 +92,6 @@ public class BlackJack {
 
         for(int i = 0; i < n; i++) {
             this.reset();
-//            myScore = 0;
-//            dealerScore = 0;
-//            myTurn = true;
 
             for(int j = 0; j < draws; j++) {
                 this.draw(true);

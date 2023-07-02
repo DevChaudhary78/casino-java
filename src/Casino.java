@@ -27,7 +27,7 @@ public class Casino {
                         System.out.println("4. Exit");
                         System.out.print("Enter your choice: ");
                         int choice = scanner.nextInt();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
 
                         switch (choice) {
                             case 1 -> {
@@ -129,7 +129,7 @@ public class Casino {
                             }
 
                             case 2 -> {
-                                System.out.println("\nThe winner is " + poker.winCheck() + "\n");
+                                System.out.println(ConsoleColors.GREEN + "\nThe winner is " + poker.winCheck() + "\n" + ConsoleColors.RESET);
 
                                 System.out.println("Dealer's cards: ");
                                 for(int i = 0; i < poker.getDealerCards().size(); i++) {
@@ -140,6 +140,8 @@ public class Casino {
                                 for(int i = 0; i < poker.getPlayerCards().size(); i++){
                                     System.out.println("\t" + poker.getPlayerCards().get(i));
                                 }
+
+                                run = false;
                             }
 
                             case 3 -> poker.reset();

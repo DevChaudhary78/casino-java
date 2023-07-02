@@ -55,6 +55,9 @@ public class Poker {
             }
         }
 
+        // condition where one of the cards is "A" and the rest of them are 2, 3, ...
+        if(cards.get(cards.size()-1).getValue() == 11 && cards.get(0).getValue() == 2) return true;
+
         return answer;
     }
 
@@ -69,7 +72,7 @@ public class Poker {
             boolean answer = true;
 
             for(Card card: cards) {
-                if(!Objects.equals(card.getSuit(), firstCard.getSuit())) {
+                if(!card.getSuit().equalsIgnoreCase(firstCard.getSuit())) {
                     answer = false;
                     break;
                 }
@@ -85,11 +88,30 @@ public class Poker {
         return isFlush && cards.get(cards.size() - 1).getValue() == 11;
     }
 
+    private boolean sameSuit(List<Card> cards) {
+        boolean answer = true;
+
+        Card firstCard = cards.get(0);
+
+        for(Card card: cards) {
+            if(!card.getSuit().equals(firstCard.getSuit())) {
+                answer = false;
+                break;
+            }
+        }
+
+        return answer;
+    }
+
     public int handValue(List<Card> cards) {
         int value = 0;
 
         for(Card card: cards) {
-            value += card.getValue();
+            if(card.getSuit().equalsIgnoreCase("j")) value += 11;
+            else if(card.getSuit().equalsIgnoreCase("q")) value += 12;
+            else if(card.getSuit().equalsIgnoreCase("k")) value += 13;
+            else if(card.getSuit().equalsIgnoreCase("a")) value += 14;
+            else value += card.getValue();
         }
 
         return value;
@@ -111,17 +133,32 @@ public class Poker {
     }
 
     public String winCheck() {
-        boolean sameSequence = (isOfKind(playerCards) && isOfKind(dealerCards)) || (isStraight(playerCards) && isStraight(dealerCards)) || (isFlush(playerCards) && isFlush(dealerCards));
-        if(sameSequence) {
+        int dealerPriority;
+        int playerPriority;
+
+        // dealer
+        if(isOfKind(dealerCards)) dealerPriority = 5;
+        else if(isRoyalFlush(dealerCards)) dealerPriority = 4;
+        else if(isFlush(dealerCards)) dealerPriority = 3;
+        else if(isStraight(dealerCards)) dealerPriority = 2;
+        else if(sameSuit(dealerCards)) dealerPriority = 1;
+        else dealerPriority = 0;
+
+        // player
+        if(isOfKind(playerCards)) playerPriority = 5;
+        else if(isRoyalFlush(playerCards)) playerPriority = 4;
+        else if(isFlush(playerCards)) playerPriority = 3;
+        else if(isStraight(playerCards)) playerPriority = 2;
+        else if(sameSuit(playerCards)) playerPriority = 1;
+        else playerPriority = 0;
+
+        if(playerPriority > dealerPriority) return "Player";
+        else if(dealerPriority > playerPriority) return "Dealer";
+        else {
             if(handValue(playerCards) > handValue(dealerCards)) return "Player";
-            else return "Dealer";
+            else if(handValue(dealerCards) > handValue(playerCards)) return "Dealer";
+            else return "Draw";
         }
-        else if(isOfKind(dealerCards)) return "Dealer";
-        else if(isRoyalFlush(dealerCards) && !isOfKind(playerCards)) return "Dealer";
-        else if(isFlush(dealerCards) && !(isOfKind(playerCards) || isRoyalFlush(playerCards))) return "Dealer";
-        else if(isStraight(dealerCards) && !(isOfKind(playerCards) || isFlush(playerCards) || isRoyalFlush(playerCards)))  return "Dealer";
-        else if(handValue(dealerCards) > handValue(playerCards)) return "Dealer";
-        else return "Player";
     }
 
     private Card draw() {
