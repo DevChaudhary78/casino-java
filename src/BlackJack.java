@@ -5,6 +5,7 @@ public class BlackJack {
     private int sim_myWins;
     private int sim_dealerWins;
     private int sim_notDone;
+    int winPoints = 21;
 
     private final Deck deck;
 
@@ -64,7 +65,6 @@ public class BlackJack {
     }
 
     public String winCheck() {
-        int winPoints = 21;
         if(myScore == winPoints && dealerScore == winPoints) return "Dealer";
         else if(myScore > winPoints) return "Dealer";
         else if(myScore == winPoints) return "Player";
@@ -92,9 +92,9 @@ public class BlackJack {
 
         for(int i = 0; i < n; i++) {
             this.reset();
-            myScore = 0;
-            dealerScore = 0;
-            myTurn = true;
+//            myScore = 0;
+//            dealerScore = 0;
+//            myTurn = true;
 
             for(int j = 0; j < draws; j++) {
                 this.draw(true);

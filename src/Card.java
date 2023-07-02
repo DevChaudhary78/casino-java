@@ -41,5 +41,11 @@ public class Card {
     public String toString() {
         return "the " + this.suit + " of " + this.rank;
     }
+
+
+    // for poker
+    public String getSuit() {
+        return this.suit;
+    }
 }
 

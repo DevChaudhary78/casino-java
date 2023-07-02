@@ -6,15 +6,17 @@ public class Deck {
     String[] suits = new String[]{"Club", "Heart", "Spade", "Diamond"};
     String[] ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
-    Card[] cards = new Card[52];
+    Card[] cards = new Card[208];
 
     Deck() {
         int i = 0;
-        for (String suit : suits) {
-            for (String rank : ranks) {
-                Card card = new Card(suit, rank);
-                cards[i] = card;
-                i++;
+        for(int j = 0; j < 4; j++) {
+            for (String suit : suits) {
+                for (String rank : ranks) {
+                    Card card = new Card(suit, rank);
+                    cards[i] = card;
+                    i++;
+                }
             }
         }
     } /** * Basically draw is drawing a card from a deck of a card * it means if the card has not yet been played, then only we can draw it *
