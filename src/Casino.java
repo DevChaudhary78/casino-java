@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * @author Dev Chaudhary, 000885797
+ */
 public class Casino {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

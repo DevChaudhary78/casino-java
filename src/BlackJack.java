@@ -1,11 +1,24 @@
+/**
+ * Black Jack is a game where both dealer and player pick card one by one,
+ * The person who scores more than 21 first gets busted and another player wins
+ * The person who scores exactly more than 21 first wins
+ * @author Dev Chaudhary, 000885797
+ */
 public class BlackJack {
+    /** Player's score **/
     private int myScore;
+    /** Dealer's Score **/
     private int dealerScore;
+    /** To check the weather, it's a player turn or dealer's turn **/
     private boolean myTurn;
+    /** Number of wins in a simulation run for player **/
     private int sim_myWins;
+    /** Number of wins in a simulation run for dealer **/
     private int sim_dealerWins;
+    /** Simulations where nobody won **/
     private int sim_notDone;
-    int winPoints = 21;
+    /** constant max points to win (pass this you will lose) **/
+    private int winPoints = 21;
 
     private final Deck deck;
 
@@ -17,6 +30,9 @@ public class BlackJack {
         deck = new Deck();
     }
 
+    /**
+     * resets the whole game
+     */
     public void reset() {
         this.myScore = 0;
         this.dealerScore = 0;
@@ -26,7 +42,7 @@ public class BlackJack {
     }
 
     /**
-     * by default, uses the real card
+     * by default, uses the real draw
      * @return the card which is being drawn
      */
     public Card draw() {
@@ -64,6 +80,10 @@ public class BlackJack {
         return card;
     }
 
+    /**
+     * checks the condition according to Black Jack's game rule and returns the winner
+     * @return the winner
+     */
     public String winCheck() {
         if(myScore == winPoints && dealerScore == winPoints) return "Dealer";
         else if(myScore > winPoints) return "Dealer";
@@ -116,6 +136,9 @@ public class BlackJack {
     }
 
 
+    /**
+     * clears the simulation wins for all 3 possibilities
+     */
     private void clearSimulation() {
         this.sim_myWins = 0;
         this.sim_dealerWins = 0;
@@ -126,6 +149,7 @@ public class BlackJack {
         }
     }
 
+    /** Getters & Setters for myScore, dealerScore, myTurn, sim_dealerWins, sim_notDone, sim_myWins **/
     public int getMyScore() {
         return this.myScore;
     }
